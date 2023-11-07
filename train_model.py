@@ -12,7 +12,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 def ReadTrainingData():
-    """"""
 
     # 2つのCSVファイルを読み込んで結合
     df1 = pd.read_csv(os.path.abspath("data/カップリング名リスト.csv"), encoding="utf-8")
@@ -29,9 +28,7 @@ def ReadTrainingData():
     return df
 
 
-def main():
-
-    df = ReadTrainingData()
+def TrainModel(df):
 
     # 特徴行列と目標変数を分割
     X = df[['1文字目', '2文字目', '3文字目', '4文字目']]
@@ -54,9 +51,18 @@ def main():
     confusion = confusion_matrix(y_test, y_pred)
     classification_rep = classification_report(y_test, y_pred)
 
+    # 学習結果を出力
     print("Accuracy:", accuracy)
     print("Confusion Matrix:\n", confusion)
     print("Classification Report:\n", classification_rep)
+
+    return model
+
+
+def main():
+
+    df = ReadTrainingData()
+    model = TrainModel(df)
 
     # モデルを保存
     joblib.dump(model, 'lightgbm_model.pkl')
