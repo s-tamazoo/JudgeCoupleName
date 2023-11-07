@@ -65,7 +65,7 @@ def main():
     model = TrainModel(df)
 
     # モデルを保存
-    joblib.dump(model, 'lightgbm_model.pkl')
+    joblib.dump(model, 'model.pkl')
 
 
 if __name__ == "__main__":
