@@ -65,15 +65,12 @@ def main():
         '4文字目': [name_boin[3]]   # 4文字目列のデータ
     })
 
-    # 予測
-    y_pred = model.predict(X_test)
+    # 学習済みモデルを使用して確率で出力
+    probabilities = model.predict_proba(X_test)
 
-    # X_test と予測結果 y_pred を結合してデータフレームを作成
-    result_df = X_test.copy()
-    result_df['Predicted'] = y_pred
-
-    # データフレームを表示
-    print(f"「{cup_name}」はカプ名です") if y_pred[0] == 1 else print(f"「{cup_name}」はカプ名ではありません")
+    # 各サンプルに対するクラス1に属する確率を表示
+    for i, prob in enumerate(probabilities):
+        print(f"{cup_name}のカップリング名っぽさは {int(prob[1]*100)}% です")
 
 
 if __name__ == "__main__":
